@@ -7,6 +7,8 @@
    2. Theme toggle (dark / light), persisted in localStorage. The initial
       theme (saved choice or system preference) is applied by a small
       inline script in index.html <head>.
+   3. Language toggle (English / Chinese), persisted in localStorage as
+      "lang". Initial language is also applied by the inline script.
    ========================================================================== */
 
 (function () {
@@ -37,6 +39,23 @@
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
+    });
+  }
+
+  /* ---- 3. Language toggle ------------------------------------------------- */
+  var langToggle = document.getElementById("lang-toggle");
+  if (langToggle) {
+    langToggle.addEventListener("click", function () {
+      var root = document.documentElement;
+      if (root.getAttribute("data-lang") === "zh") {
+        root.removeAttribute("data-lang");
+        root.setAttribute("lang", "en");
+        localStorage.setItem("lang", "en");
+      } else {
+        root.setAttribute("data-lang", "zh");
+        root.setAttribute("lang", "zh");
+        localStorage.setItem("lang", "zh");
+      }
     });
   }
 })();
