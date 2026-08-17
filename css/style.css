@@ -130,6 +130,11 @@ section p:last-child { margin-bottom: 0; }
 [data-lang="zh"] .zh { display: inline; }
 [data-lang="zh"] .en { display: none; }
 
+/* .any — content shown in BOTH languages (e.g. paper titles and venues
+   that stay in English). Without .en/.zh a span would already show in
+   both modes; this class makes the intent explicit. */
+.any { display: inline; }
+
 /* 5. News ----------------------------------------------------------------- */
 .news-list { list-style: none; margin: 0; padding: 0; }
 .news-list li { display: flex; gap: 14px; padding: 5px 0; }
