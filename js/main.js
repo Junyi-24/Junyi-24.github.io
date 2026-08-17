@@ -7,8 +7,9 @@
    2. Theme toggle (dark / light), persisted in localStorage. The initial
       theme (saved choice or system preference) is applied by a small
       inline script in index.html <head>.
-   3. Language toggle (English / Chinese), persisted in localStorage as
-      "lang". Initial language is also applied by the inline script.
+   3. Language toggle (English / Chinese). NOT persisted: the page always
+      opens in English; switching applies only until the next reload.
+   4. Top navigation: highlights the section currently in view.
    ========================================================================== */
 
 (function () {
@@ -42,7 +43,7 @@
     });
   }
 
-  /* ---- 3. Language toggle ------------------------------------------------- */
+  /* ---- 3. Language toggle (not persisted — page always opens in English) - */
   var langToggle = document.getElementById("lang-toggle");
   if (langToggle) {
     langToggle.addEventListener("click", function () {
@@ -50,12 +51,30 @@
       if (root.getAttribute("data-lang") === "zh") {
         root.removeAttribute("data-lang");
         root.setAttribute("lang", "en");
-        localStorage.setItem("lang", "en");
       } else {
         root.setAttribute("data-lang", "zh");
         root.setAttribute("lang", "zh");
-        localStorage.setItem("lang", "zh");
       }
     });
   }
+
+  /* ---- 4. Nav highlight: mark the link of the section in view -------------- */
+  var navSections = Array.prototype.slice.call(
+    document.querySelectorAll("main section[id]")
+  );
+  var navLinks = Array.prototype.slice.call(
+    document.querySelectorAll('.nav-links a[href^="#"]')
+  );
+  function onScroll() {
+    var pos = window.scrollY + 90;                 // just below the fixed nav
+    var current = navSections[0];
+    for (var i = 0; i < navSections.length; i++) {
+      if (navSections[i].offsetTop <= pos) { current = navSections[i]; }
+    }
+    navLinks.forEach(function (a) {
+      a.classList.toggle("active", a.getAttribute("href") === "#" + current.id);
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 })();
