@@ -91,6 +91,7 @@ html { scroll-behavior: smooth; }
 .nav-links {
   display: flex;
   align-items: center;
+  justify-content: center;   /* center the links on wide screens */
   gap: 4px;
   flex: 1;
   min-width: 0;
@@ -308,6 +309,9 @@ footer p { margin: 0; }
   .container { padding: 20px 16px 40px; }
 
   .topnav { padding: 0 8px; height: 48px; }
+  /* On mobile the links scroll horizontally; left-align so the first
+     links are reachable (centered overflow clips the start of the list). */
+  .nav-links { justify-content: flex-start; }
   .nav-links a { padding: 6px 10px; font-size: 0.9rem; }
   .icon-button { width: 32px; height: 32px; }
 
